@@ -1,0 +1,13 @@
+{
+  "name": "Mis accesos - Atajos",
+  "short_name": "Atajos",
+  "description": "Accesos directos para abrir sitios y apps en tu PC o celular.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#11121a",
+  "theme_color": "#11121a",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
