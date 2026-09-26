@@ -58,10 +58,11 @@
       {id:'youtube',title:'YouTube',kind:'web',url:'https://www.youtube.com/',note:'',mode:'auto',icon:'▶️',color:'#ff625c'},
       {id:'kick',title:'Kick',kind:'web',url:'https://kick.com/',note:'',mode:'auto',icon:'🟢',color:'#53d769'},
       {id:'spotify',title:'Spotify',kind:'web',url:'https://open.spotify.com/',note:'',mode:'auto',icon:'🎧',color:'#35d17a'},
-      {id:'netflix',title:'Netflix',kind:'web',url:'https://www.netflix.com/',note:'',mode:'auto',icon:'🎬',color:'#f04452'}
+      {id:'netflix',title:'Netflix',kind:'web',url:'https://www.netflix.com/',note:'',mode:'auto',icon:'🎬',color:'#f04452'},
+      {id:'warframe-steam',title:'Warframe',kind:'app',url:'steam://rungameid/230410',note:'Abrir en Steam',mode:'emoji',icon:'⚔️',color:'#bd9cff'}
     ];
     let cards=load(),editId=null,previewImage=null;
-    function load(){try{const x=JSON.parse(localStorage.getItem(STORE));if(Array.isArray(x))return x;const old=JSON.parse(localStorage.getItem('atajos-lan-v1'));if(Array.isArray(old))return old.map(c=>({...c,kind:'web',mode:'auto',icon:c.icon||'✨',color:c.color||'#ac91ff'}));return initial.map(y=>({...y}))}catch{return initial.map(y=>({...y}))}}
+    function load(){try{let x=JSON.parse(localStorage.getItem(STORE));if(!Array.isArray(x)){const old=JSON.parse(localStorage.getItem('atajos-lan-v1'));if(Array.isArray(old))x=old.map(c=>({...c,kind:'web',mode:'auto',icon:c.icon||'✨',color:c.color||'#ac91ff'}))}if(Array.isArray(x)){if(!localStorage.getItem('atajos-warframe-default-v1')){if(!x.some(c=>c.id==='warframe-steam'))x.push({...initial.find(c=>c.id==='warframe-steam')});localStorage.setItem('atajos-warframe-default-v1','1');localStorage.setItem(STORE,JSON.stringify(x))}return x}localStorage.setItem('atajos-warframe-default-v1','1');return initial.map(y=>({...y}))}catch{return initial.map(y=>({...y}))}}
     function persist(){localStorage.setItem(STORE,JSON.stringify(cards))}
     function validTarget(text,kind){const v=String(text||'').trim();if(kind==='web'){try{const u=new URL(v);return ['http:','https:'].includes(u.protocol)?u.href:null}catch{return null}}if(!/^[a-z][a-z0-9+.-]*:/i.test(v)||/^(javascript|data|file|vbscript|about):/i.test(v))return null;return v}
     function avatarFor(card){if(card.mode==='image'&&card.avatar)return card.avatar;if(card.mode==='emoji')return null;const data=channel(card.url,card.platform);return data?`https://unavatar.io/${data.platform}/${encodeURIComponent(data.name)}`:null}
